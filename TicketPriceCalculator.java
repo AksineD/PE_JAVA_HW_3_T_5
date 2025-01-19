@@ -4,19 +4,41 @@ public class TicketPriceCalculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-       int zone = showZoneMenu(scanner);
-       int row = getRowNumber(scanner, zone);
-       int tickets = getValidInteger(scanner, "Enter the number of tickets: ", 1, 40);
-       if (zone == 1) {
-           if(row <= 15) {
-               System.out.println("Total price: " + 10 * tickets);
-           } else {
-               System.out.println("Total price: " + 20 * tickets);
-           }
+        int zone = showZoneMenu(scanner);
+        int row = getRowNumber(scanner, zone);
+        int tickets = getValidInteger(scanner, "Enter the number of tickets: ", 1, 40);
 
-       } else {
-           System.out.println("Total price: " + (row <= 6 ? 25 : 40) * tickets);
-       }
+        processAndDisplayResults(zone, row, tickets);
+    }
+
+    private static void processAndDisplayResults(int zone, int row, int tickets) {
+        int totalPrice = 0;
+        if (zone == 1) {
+            if (row <= 10) {
+                totalPrice = 45 * tickets;
+            }
+            if (row >= 11 && row <= 25) {
+                totalPrice = 35 * tickets;
+            } else {
+                totalPrice = 30 * tickets;
+            }
+        } else {
+            if (row <= 5) {
+                totalPrice = 40 * tickets;
+            } else {
+                totalPrice = 45 * tickets;
+            }
+        }
+        displayPrice(tickets, totalPrice);
+    }
+
+    private static void displayPrice(int tickets, int totalPrice) {
+        if (tickets >= 5) {
+            System.out.println("You get a 10% discount!");
+            System.out.println("Total price with discount: " + (totalPrice - ((totalPrice / 100.0) * 10)));
+        } else {
+            System.out.println("Total price: " + totalPrice);
+        }
     }
 
     /**
@@ -29,20 +51,18 @@ public class TicketPriceCalculator {
         System.out.println("Select a zone:");
         System.out.println("1. Hall zone");
         System.out.println("2. Exit zone");
-        System.out.println("3. Exit");
 
-        return getValidInteger(scanner, "Enter your choice: ", 1, 5);
+        return getValidInteger(scanner, "Enter your choice: ", 1, 2);
     }
 
     private static int getRowNumber(Scanner scanner, int zone) {
         System.out.println("Select a row:");
         if (zone == 1) {
-            return getValidInteger(scanner, "Enter your choice: ", 1, 30);
+            return getValidInteger(scanner, "Enter your choice: ", 1, 32);
         } else {
             return getValidInteger(scanner, "Enter your choice: ", 1, 12);
         }
     }
-
 
     /**
      * Prompts the user to enter a valid integer within the specified range,
@@ -72,5 +92,4 @@ public class TicketPriceCalculator {
             }
         }
     }
-
 }
