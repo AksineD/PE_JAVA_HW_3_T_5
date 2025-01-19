@@ -7,17 +7,26 @@ public class TicketPriceCalculator {
         int zone = showZoneMenu(scanner);
         int row = getRowNumber(scanner, zone);
         int tickets = getValidInteger(scanner, "Enter the number of tickets: ", 1, 40);
+        scanner.close();
 
         processAndDisplayResults(zone, row, tickets);
     }
 
+    /**
+     * Processes the provided zone, row, and ticket quantity input,
+     * calculates the total price based on the given criteria and discounts,
+     * and displays the result to the user.
+     *
+     * @param zone    The selected zone (e.g., hall zone or exit zone)
+     * @param row     The selected row within the zone
+     * @param tickets The number of tickets being purchased
+     */
     private static void processAndDisplayResults(int zone, int row, int tickets) {
         int totalPrice = 0;
         if (zone == 1) {
             if (row <= 10) {
                 totalPrice = 45 * tickets;
-            }
-            if (row >= 11 && row <= 25) {
+            } else if (row <= 25) {
                 totalPrice = 35 * tickets;
             } else {
                 totalPrice = 30 * tickets;
@@ -31,6 +40,15 @@ public class TicketPriceCalculator {
         }
         displayPrice(tickets, totalPrice);
     }
+
+    /**
+     * Calculates and displays the total price for the given number of tickets.
+     * Applies a 10% discount if 5 or more tickets are purchased and displays
+     * the discounted price.
+     *
+     * @param tickets    The number of tickets purchased
+     * @param totalPrice The total price before any discount is applied
+     */
 
     private static void displayPrice(int tickets, int totalPrice) {
         if (tickets >= 5) {
@@ -55,6 +73,14 @@ public class TicketPriceCalculator {
         return getValidInteger(scanner, "Enter your choice: ", 1, 2);
     }
 
+    /**
+     * Prompts the user to select a valid row number based on the specified zone.
+     * Ensures the row number is within the allowed range for the given zone.
+     *
+     * @param scanner Scanner object used to read user input
+     * @param zone    The selected zone which determines the valid row range
+     * @return A valid row number selected by the user
+     */
     private static int getRowNumber(Scanner scanner, int zone) {
         System.out.println("Select a row:");
         if (zone == 1) {
