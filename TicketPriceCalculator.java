@@ -49,7 +49,6 @@ public class TicketPriceCalculator {
      * @param tickets    The number of tickets purchased
      * @param totalPrice The total price before any discount is applied
      */
-
     private static void displayPrice(int tickets, int totalPrice) {
         if (tickets >= 5) {
             System.out.println("You get a 10% discount!");
